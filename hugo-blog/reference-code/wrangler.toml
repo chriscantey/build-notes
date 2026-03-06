@@ -1,0 +1,12 @@
+name = "yoursite-subscribe"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+account_id = "your-cloudflare-account-id"
+
+# Route configuration
+routes = [
+  { pattern = "yoursite.com/api/subscribe", zone_name = "yoursite.com" }
+]
+
+# Secrets (set via: wrangler secret put BUTTONDOWN_API_KEY)
+# BUTTONDOWN_API_KEY - stored securely, not in this file

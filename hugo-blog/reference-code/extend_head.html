@@ -1,0 +1,101 @@
+{{- /* Custom head additions - place in layouts/partials/extend_head.html */ -}}
+{{- /*
+  Example PaperMod customization. This shows the pattern for overriding
+  PaperMod's CSS variables and styling components. Replace the colors
+  and tweaks with whatever fits your site.
+*/ -}}
+<style>
+/* -- Dark mode overrides -- */
+:root[data-theme="dark"] {
+    --theme: rgb(22, 24, 28);
+    --entry: rgb(30, 33, 38);
+    --primary: rgb(230, 232, 236);
+    --secondary: rgb(160, 165, 175);
+    --content: rgb(220, 222, 228);
+    --tertiary: rgb(42, 46, 52);
+    --border: rgb(38, 42, 48);
+    --code-block-bg: rgb(16, 18, 22);
+    --code-bg: rgb(28, 30, 36);
+    --accent: rgb(80, 180, 172);
+    --accent-hover: rgb(110, 200, 192);
+}
+
+/* -- Light mode overrides -- */
+:root:not([data-theme="dark"]) {
+    --accent: rgb(36, 100, 120);
+    --accent-hover: rgb(28, 80, 100);
+}
+
+/* Links */
+[data-theme="dark"] a { color: var(--accent); }
+[data-theme="dark"] a:hover { color: var(--accent-hover); }
+:root:not([data-theme="dark"]) a { color: var(--accent); }
+:root:not([data-theme="dark"]) a:hover { color: var(--accent-hover); }
+
+/* Menu links stay neutral */
+#menu a { color: var(--primary); font-weight: 600; }
+[data-theme="dark"] #menu a:hover { color: var(--accent-hover); }
+:root:not([data-theme="dark"]) #menu a:hover { color: var(--accent-hover); }
+
+/* Post titles */
+[data-theme="dark"] .post-entry:hover .post-title { color: var(--accent); }
+:root:not([data-theme="dark"]) .post-entry:hover .post-title { color: var(--accent); }
+
+/* Code blocks - dark terminal look in both modes */
+.post-content pre,
+.highlight pre {
+    background: var(--code-block-bg, rgb(16, 18, 22)) !important;
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+}
+
+.highlight { background: transparent !important; margin: 1.5rem 0; }
+.post-content pre code { background: transparent; padding: 0; border-radius: 0; }
+
+.post-content code {
+    background: var(--code-bg, rgba(0, 0, 0, 0.06));
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+:root:not([data-theme="dark"]) .post-content pre,
+:root:not([data-theme="dark"]) .highlight pre {
+    background: rgb(40, 44, 52) !important;
+}
+
+:root:not([data-theme="dark"]) .post-content code {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 3px solid var(--accent);
+    background: rgba(80, 180, 172, 0.06);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 6px 6px 0;
+}
+
+blockquote p:first-child { margin-top: 0; }
+blockquote p:last-child { margin-bottom: 0; }
+
+:root:not([data-theme="dark"]) blockquote {
+    background: rgba(36, 100, 120, 0.04);
+}
+
+/* Typography */
+.post-content h2 { margin-top: 3.5rem; margin-bottom: 1.5rem; }
+.post-content h3 { margin-top: 2.5rem; margin-bottom: 1.25rem; }
+.post-content li { margin-bottom: 0.5rem; }
+
+.post-content p {
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+}
+
+/* Layout */
+.post-single .post-meta { margin-bottom: 2rem; }
+</style>

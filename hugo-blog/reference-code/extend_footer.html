@@ -1,0 +1,175 @@
+<!-- Newsletter signup form - place in layouts/partials/extend_footer.html -->
+<!-- Remove this entire section if you don't need a newsletter -->
+<div id="newsletter" class="newsletter-section">
+  <div class="newsletter-content">
+    <h3>Stay in the loop</h3>
+    <p>New posts in your inbox. No spam. Unsubscribe anytime.</p>
+    <form class="newsletter-form" id="newsletter-form">
+      <input
+        type="email"
+        name="email"
+        placeholder="you@example.com"
+        required
+        autocomplete="email"
+        aria-label="Email address"
+      />
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="newsletter-status" id="newsletter-status" aria-live="polite"></p>
+  </div>
+</div>
+
+<div class="site-footer-links">
+  <div class="footer-links-inner">
+    <a href="/privacy/">Privacy</a>
+    <span class="footer-sep">&middot;</span>
+    <a href="/terms/">Terms</a>
+  </div>
+</div>
+
+<style>
+.newsletter-section {
+  margin-top: 3rem;
+  padding: 2rem 0 1.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.newsletter-content {
+  max-width: 460px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.newsletter-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.newsletter-content > p {
+  margin: 0 0 1rem 0;
+  color: var(--secondary);
+  font-size: 0.9rem;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.newsletter-form input[type="email"] {
+  flex: 1;
+  min-width: 200px;
+  max-width: 280px;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--entry);
+  color: var(--primary);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.newsletter-form input[type="email"]::placeholder {
+  color: var(--secondary);
+  opacity: 0.6;
+}
+
+.newsletter-form input[type="email"]:focus {
+  outline: none;
+  border-color: var(--accent, rgb(80, 180, 172));
+}
+
+.newsletter-form button {
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: 5px;
+  background: var(--accent, rgb(80, 180, 172));
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.newsletter-form button:hover { background: var(--accent-hover, rgb(110, 200, 192)); }
+.newsletter-form button:active { transform: scale(0.98); }
+.newsletter-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.newsletter-status {
+  display: block;
+  padding-top: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.newsletter-status.success { color: #10b981; }
+.newsletter-status.error { color: #ef4444; }
+
+.site-footer-links {
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer-links-inner { font-size: 0.8rem; color: var(--secondary); }
+.footer-links-inner a { color: var(--secondary); text-decoration: none; }
+.footer-links-inner a:hover { color: var(--primary); }
+.footer-sep { margin: 0 0.5rem; opacity: 0.4; }
+
+/* Light mode adjustments */
+:root:not([data-theme="dark"]) .newsletter-form button {
+  background: var(--accent, rgb(36, 100, 120));
+}
+:root:not([data-theme="dark"]) .newsletter-form button:hover {
+  background: var(--accent-hover, rgb(28, 80, 100));
+}
+</style>
+
+<script>
+(function() {
+  var form = document.getElementById('newsletter-form');
+  var status = document.getElementById('newsletter-status');
+
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var email = form.email.value.trim();
+    var button = form.querySelector('button');
+
+    status.textContent = '';
+    status.className = 'newsletter-status';
+
+    button.disabled = true;
+    button.textContent = 'Subscribing...';
+
+    fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    })
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+      if (data.success) {
+        status.textContent = data.message;
+        status.className = 'newsletter-status success';
+        form.reset();
+      } else {
+        status.textContent = data.error || 'Something went wrong.';
+        status.className = 'newsletter-status error';
+      }
+    })
+    .catch(function() {
+      status.textContent = 'Unable to connect. Please try again.';
+      status.className = 'newsletter-status error';
+    })
+    .finally(function() {
+      button.disabled = false;
+      button.textContent = 'Subscribe';
+    });
+  });
+})();
+</script>

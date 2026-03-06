@@ -1,0 +1,23 @@
+# Hugo preview server with HTTPS, drafts, and hot reload
+services:
+  hugo:
+    image: hugomods/hugo:exts
+    container_name: hugo-preview
+    restart: unless-stopped
+    ports:
+      - "1313:1313"
+    volumes:
+      - /path/to/your-site:/src
+      - /path/to/certs:/certs:ro
+    working_dir: /src
+    command: >
+      hugo server
+      --bind 0.0.0.0
+      --baseURL https://your-server:1313
+      --appendPort=false
+      --buildDrafts
+      --buildFuture
+      --tlsCertFile /certs/fullchain.pem
+      --tlsKeyFile /certs/privkey.pem
+      --disableFastRender
+      --poll 1s
