@@ -58,6 +58,12 @@ If the project integrates with an AI assistant, explain the boundary. What does 
 
 An ASCII diagram showing the main components and how they connect. Keep it simple. One diagram, a few boxes, arrows showing data flow.
 
+### What it looks like
+
+Screenshots or diagrams showing your implementation. Not every project has a visual surface, and that's fine. Skip this for pure APIs or backend services. But if there's a UI, a dashboard, a mobile shortcut, a terminal workflow, or anything visual, a few clean screenshots help people understand what they're building toward.
+
+For projects without a visual component, a flow diagram or architecture-style infographic can serve a similar purpose. These aren't required, but they give readers (and their AI assistants) a concrete picture of how the pieces fit together.
+
 ### What it stores/exposes/does
 
 The data model or API surface. What goes in, what comes out, what the structure looks like. Show a sample JSON object or a route table.
