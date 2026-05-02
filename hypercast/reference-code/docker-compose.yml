@@ -1,0 +1,40 @@
+services:
+  hypercast:
+    container_name: hypercast
+    build:
+      context: ./app-src
+      dockerfile: Dockerfile
+    ports:
+      - "4973:4973"
+    volumes:
+      - ./audio:/app/app/static/audio
+      - ./images:/app/app/static/images
+      - ./assets:/app/assets
+      - ./data:/app/data
+    env_file:
+      - .env
+    environment:
+      - SERVER_PORT=4973
+      # If running Ollama on the host (outside Docker), expose the host network.
+      # If Ollama runs in another container on a shared network, use the container name instead.
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      # Chatterbox TTS sidecar reachable by container name on a shared user network.
+      - OPENAI_BASE_URL=http://chatterbox-tts:8890/v1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - hypercast-net
+      # Optional: a shared user network if your TTS service runs in its own container.
+      - tts-net
+    restart: unless-stopped
+    command: >
+      sh -c "gunicorn --workers 1
+      --timeout 3600
+      --bind 0.0.0.0:4973
+      wsgi:app"
+
+networks:
+  hypercast-net:
+    external: true
+  tts-net:
+    external: true

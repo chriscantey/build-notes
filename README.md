@@ -27,3 +27,5 @@ Most of what's described here runs on a local network for a single user. These a
 | [mac-services-api](./mac-services-api/) | REST API that exposes macOS Calendar, Reminders, and Contacts over HTTPS |
 | [notes-inbox](./notes-inbox/) | Capture inbox for voice notes and ideas, with Apple Shortcut integration |
 | [hugo-blog](./hugo-blog/) | Hugo blog with PaperMod, Cloudflare Pages, and newsletter Worker |
+| [event-log](./event-log/) | Hook-based event capture and searchable log explorer for AI assistant activity |
+| [hypercast](./hypercast/) | Personal podcast generator that turns articles and text into audio episodes with an RSS feed |
