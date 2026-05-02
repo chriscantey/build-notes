@@ -29,3 +29,4 @@ Most of what's described here runs on a local network for a single user. These a
 | [hugo-blog](./hugo-blog/) | Hugo blog with PaperMod, Cloudflare Pages, and newsletter Worker |
 | [event-log](./event-log/) | Hook-based event capture and searchable log explorer for AI assistant activity |
 | [hypercast](./hypercast/) | Personal podcast generator that turns articles and text into audio episodes with an RSS feed |
+| [assistant-voice](./assistant-voice/) | macOS menu bar app that streams TTS audio from a personal AI voice server over WebSocket |
