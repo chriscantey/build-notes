@@ -20,7 +20,9 @@ The other thing I wanted was for the app to be smart about networks. I move the 
 
 ## How the assistant uses it
 
-The assistant doesn't talk to this app directly. It talks to the voice server, which talks to this app. The pipeline looks like: the assistant calls a `/notify` endpoint on the server with a message, the server calls a TTS provider (ElevenLabs or Google TTS or whatever's configured), the server gets back an MP3, and the server broadcasts that MP3 over WebSocket to every connected client. This app is one of those clients.
+The assistant doesn't talk to this app directly. It talks to the voice server, which talks to this app. The pipeline looks like: the assistant calls a `/notify` endpoint on the server with a message, the server calls a TTS provider (Kokoro locally, or ElevenLabs/Google in the cloud), the server gets back an MP3, and the server broadcasts that MP3 over WebSocket to every connected client. This app is one of those clients.
+
+The server side is documented in the [voice-server](../voice-server/) build note — read both together if you're standing up the full pipeline. The two are designed as a pair: this app is the receiver, the voice server is the broadcaster.
 
 That separation matters. The assistant's intelligence lives on the server side. This app is dumb on purpose — it's a speaker. If you have multiple Macs, you run a copy on each one and they all play the same audio in sync (or close enough; there's no clock-tight synchronization). If you swap TTS providers or add a new one, this app doesn't change.
 

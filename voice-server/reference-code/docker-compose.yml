@@ -1,0 +1,40 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: voice-server
+    restart: unless-stopped
+    ports:
+      # 8888 = local HTTP (browser pages, headless sinks on the same network)
+      # 8889 = HTTPS for remote clients (Mac menu bar app, anything over a VPN)
+      - "8888:8888"
+      - "8889:8889"
+    volumes:
+      # Adjust these paths for your setup. .env holds provider config; certs are
+      # for the HTTPS listener (the server runs HTTP-only if certs are missing).
+      - ./config/.env:/app/.env:ro
+      - ./config/voice-personalities.json:/app/config/voice-personalities.json:ro
+      - ./certs:/app/certs:ro
+    environment:
+      - PAI_VOICE_STREAM_PORT=8888
+      - PAI_VOICE_WSS_PORT=8889
+      - CERTS_DIR=/app/certs
+    depends_on:
+      - kokoro
+    networks:
+      - voice-net
+
+  kokoro:
+    build:
+      context: ./kokoro
+      dockerfile: Dockerfile
+    container_name: voice-server-kokoro
+    restart: unless-stopped
+    networks:
+      - voice-net
+
+networks:
+  voice-net:
+    # Create this network once with: docker network create voice-net
+    external: true

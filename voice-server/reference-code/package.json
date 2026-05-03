@@ -1,0 +1,11 @@
+{
+  "name": "voice-server",
+  "version": "1.0.0",
+  "description": "TTS streaming service - generates speech via Kokoro/ElevenLabs/Google and broadcasts to WebSocket clients",
+  "type": "module",
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "bun run src/server.ts",
+    "dev": "bun --watch run src/server.ts"
+  }
+}

@@ -30,3 +30,4 @@ Most of what's described here runs on a local network for a single user. These a
 | [event-log](./event-log/) | Hook-based event capture and searchable log explorer for AI assistant activity |
 | [hypercast](./hypercast/) | Personal podcast generator that turns articles and text into audio episodes with an RSS feed |
 | [assistant-voice](./assistant-voice/) | macOS menu bar app that streams TTS audio from a personal AI voice server over WebSocket |
+| [voice-server](./voice-server/) | TTS broadcast server (Bun + Kokoro sidecar) that generates speech and streams MP3 to all connected WebSocket clients |
